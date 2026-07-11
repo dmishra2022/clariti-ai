@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clarity — Custom GenAI & Decision Intelligence Studio</title>
+<meta name="description" content="Clarity is a Bangalore-based studio building custom GenAI applications and autonomous decision-intelligence systems, including our own platform, Decisio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ===========================================================
+   CLARITY — shared stylesheet
+   A studio that builds custom GenAI & decision-intelligence
+   systems. Design language: deep graphite-navy ground, a single
+   warm "clarity gold" accent, a cool ice-blue for data/technical
+   moments. Signature motif: the "focus rule" — a scatter of
+   thin offset lines that converge into one crisp gold line,
+   standing for turning noisy inputs into a clear decision.
+=========================================================== */
+
+:root{
+  --void:        #0a0d12;
+  --surface:     #10141c;
+  --surface-2:   #161b26;
+  --surface-3:   #1d2431;
+  --hairline:    #262c3a;
+  --hairline-2:  #333c4d;
+
+  --text-1:      #edeff4;
+  --text-2:      #aab0c2;
+  --text-3:      #737c93;
+
+  --gold:        #c9a961;
+  --gold-soft:   #e4cf9a;
+  --gold-dim:    rgba(201,169,97,0.14);
+
+  --ice:         #6fb4c9;
+  --ice-soft:    #a9d3e0;
+
+  --sage:        #8ea88e;
+
+  --radius-s:    2px;
+  --radius-m:    4px;
+
+  --font-display: "Fraunces", "Iowan Old Style", serif;
+  --font-body:    "Manrope", "Segoe UI", sans-serif;
+  --font-mono:    "IBM Plex Mono", "SFMono-Regular", monospace;
+
+  --maxw: 1180px;
+}
+
+*, *::before, *::after{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+
+body{
+  margin:0;
+  background: var(--void);
+  color: var(--text-1);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    radial-gradient(ellipse 900px 500px at 12% -10%, rgba(201,169,97,0.06), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 100% 0%, rgba(111,180,201,0.05), transparent 55%);
+  background-attachment: fixed;
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+
+a{ color: inherit; text-decoration: none; }
+img{ max-width:100%; display:block; }
+ul{ margin:0; padding:0; list-style:none; }
+
+.container{
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+::selection{ background: var(--gold); color: var(--void); }
+
+:focus-visible{
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* ---------- Typography ---------- */
+
+h1, h2, h3, h4{
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-1);
+  margin: 0;
+}
+
+.eyebrow{
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.eyebrow::before{
+  content:"";
+  width: 22px; height:1px;
+  background: var(--gold);
+  display:inline-block;
+}
+
+.h-hero{
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: 1.04;
+  font-weight: 560;
+}
+.h-hero em, .accent-serif{
+  font-style: italic;
+  color: var(--gold-soft);
+  font-weight: 500;
+}
+
+.h-1{ font-size: clamp(32px, 4.2vw, 48px); line-height: 1.1; }
+.h-2{ font-size: clamp(24px, 2.6vw, 32px); line-height: 1.2; }
+.h-3{ font-size: 20px; line-height: 1.3; }
+
+.lede{
+  font-size: 19px;
+  color: var(--text-2);
+  max-width: 640px;
+  line-height: 1.65;
+}
+
+.body-md{ color: var(--text-2); font-size: 15.5px; line-height: 1.7; }
+
+.label-mono{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+/* ---------- Focus rule (signature divider) ---------- */
+
+.focus-rule{
+  position: relative;
+  height: 26px;
+  margin: 0 0 28px 0;
+  width: 220px;
+}
+.focus-rule span{
+  position:absolute;
+  left:0; top:50%;
+  height:1px;
+  width:100%;
+  background: var(--hairline-2);
+  transform-origin: left center;
+}
+.focus-rule span:nth-child(1){ transform: translateY(-7px) scaleX(0.55); opacity:0.35; }
+.focus-rule span:nth-child(2){ transform: translateY(-3px) scaleX(0.78); opacity:0.55; }
+.focus-rule span:nth-child(3){ transform: translateY(0px)  scaleX(1);    opacity:1; background: var(--gold); }
+.focus-rule span:nth-child(4){ transform: translateY(3px) scaleX(0.78); opacity:0.55; }
+.focus-rule span:nth-child(5){ transform: translateY(7px) scaleX(0.55); opacity:0.35; }
+
+.focus-rule.center{ margin-left:auto; margin-right:auto; }
+
+/* ---------- Buttons ---------- */
+
+.btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  padding: 14px 24px;
+  border-radius: var(--radius-s);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+.btn-primary{
+  background: var(--gold);
+  color: #14110a;
+  font-weight: 600;
+}
+.btn-primary:hover{ background: var(--gold-soft); transform: translateY(-1px); }
+
+.btn-ghost{
+  border-color: var(--hairline-2);
+  color: var(--text-1);
+  background: transparent;
+}
+.btn-ghost:hover{ border-color: var(--gold); color: var(--gold-soft); }
+
+.btn-arrow{ transition: transform 0.18s ease; }
+.btn:hover .btn-arrow{ transform: translateX(3px); }
+
+/* ---------- Nav ---------- */
+
+.nav{
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,13,18,0.82);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--hairline);
+}
+.nav .container{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  height: 76px;
+}
+.brand{
+  display:flex;
+  align-items:baseline;
+  gap: 9px;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+.brand .dot{ color: var(--gold); }
+.brand small{
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  font-weight: 400;
+}
+
+.nav-links{
+  display:flex;
+  gap: 36px;
+  font-size: 14.5px;
+  color: var(--text-2);
+}
+.nav-links a{ position:relative; padding: 4px 0; transition: color 0.15s ease; }
+.nav-links a:hover{ color: var(--text-1); }
+.nav-links a.active{ color: var(--gold-soft); }
+.nav-links a.active::after{
+  content:"";
+  position:absolute; left:0; right:0; bottom:-2px;
+  height:1px; background: var(--gold);
+}
+
+.nav-cta{ display:flex; align-items:center; gap:22px; }
+
+.nav-toggle{
+  display:none;
+  background:none; border:none; color: var(--text-1);
+  font-family: var(--font-mono); font-size: 13px;
+  cursor:pointer;
+}
+
+@media (max-width: 880px){
+  .nav-links{
+    position: fixed;
+    inset: 76px 0 0 0;
+    background: var(--void);
+    flex-direction: column;
+    padding: 28px 32px;
+    gap: 22px;
+    font-size: 17px;
+    display: none;
+    border-top: 1px solid var(--hairline);
+  }
+  .nav-links.open{ display:flex; }
+  .nav-toggle{ display:block; }
+  .nav-cta .btn-primary{ display:none; }
+}
+
+/* ---------- Sections / layout ---------- */
+
+section{ padding: 108px 0; }
+section.tight{ padding: 72px 0; }
+.section-head{ margin-bottom: 56px; max-width: 700px; }
+.section-head.split{ display:flex; justify-content:space-between; align-items:flex-end; gap: 40px; max-width: none; }
+
+.border-top{ border-top: 1px solid var(--hairline); }
+.border-bottom{ border-bottom: 1px solid var(--hairline); }
+
+.grid{ display:grid; gap: 28px; }
+.grid-2{ grid-template-columns: repeat(2, 1fr); }
+.grid-3{ grid-template-columns: repeat(3, 1fr); }
+.grid-4{ grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 900px){
+  .grid-4{ grid-template-columns: repeat(2, 1fr); }
+  .grid-3{ grid-template-columns: repeat(2, 1fr); }
+  .grid-2{ grid-template-columns: 1fr; }
+  .section-head.split{ flex-direction:column; align-items:flex-start; gap:20px; }
+}
+@media (max-width: 560px){
+  .grid-4, .grid-3{ grid-template-columns: 1fr; }
+  section{ padding: 76px 0; }
+  .container{ padding: 0 22px; }
+}
+
+/* ---------- Cards ---------- */
+
+.card{
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-m);
+  padding: 32px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.card:hover{ border-color: var(--hairline-2); }
+
+.card .num{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ice-soft);
+  margin-bottom: 18px;
+  display:block;
+}
+
+.card h3{ font-size: 19px; margin-bottom: 12px; font-weight: 600; }
+.card p{ color: var(--text-2); font-size: 14.5px; line-height: 1.65; margin: 0 0 16px; }
+
+.card ul{ display:flex; flex-direction:column; gap:9px; }
+.card ul li{
+  font-size: 13.5px;
+  color: var(--text-2);
+  display:flex;
+  align-items:flex-start;
+  gap:9px;
+}
+.card ul li::before{
+  content:"";
+  width:4px; height:4px;
+  border-radius:50%;
+  background: var(--gold);
+  margin-top:7px;
+  flex-shrink:0;
+}
+
+/* ---------- Stats ---------- */
+
+.stat-strip{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+.stat{
+  padding: 30px 32px;
+  border-left: 1px solid var(--hairline);
+}
+.stat:first-child{ border-left:none; }
+.stat .figure{
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3vw, 36px);
+  color: var(--gold-soft);
+  font-weight: 600;
+}
+.stat .cap{ font-family: var(--font-mono); font-size: 11.5px; letter-spacing:0.05em; color: var(--text-3); text-transform:uppercase; margin-top:6px; }
+
+@media (max-width: 760px){
+  .stat-strip{ grid-template-columns: repeat(2, 1fr); }
+  .stat:nth-child(3){ border-left:none; }
+}
+
+/* ---------- Chips ---------- */
+
+.chip-row{ display:flex; flex-wrap:wrap; gap: 10px; }
+.chip{
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  padding: 8px 14px;
+  border: 1px solid var(--hairline-2);
+  border-radius: 40px;
+  color: var(--text-2);
+}
+
+/* ---------- Client / logo strip ---------- */
+
+.client-strip{
+  display:flex; align-items:center; gap: 18px; flex-wrap:wrap;
+}
+.client-wordmark{
+  font-family: var(--font-mono);
+  font-size: 15px;
+  letter-spacing: 0.03em;
+  color: var(--text-2);
+  border: 1px solid var(--hairline);
+  padding: 12px 22px;
+  border-radius: var(--radius-s);
+}
+.client-wordmark b{ color: var(--text-1); font-weight:600; }
+
+/* ---------- Quote ---------- */
+
+.quote-block{
+  border-left: 2px solid var(--gold);
+  padding-left: 28px;
+}
+.quote-block p{
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.2vw, 26px);
+  line-height: 1.5;
+  color: var(--text-1);
+  font-style: italic;
+}
+.quote-block .attribution{
+  margin-top: 18px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--text-3);
+  letter-spacing: 0.04em;
+}
+
+/* ---------- CTA band ---------- */
+
+.cta-band{
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-m);
+  padding: 64px;
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 40px;
+}
+.cta-band .actions{ display:flex; gap:16px; flex-shrink:0; }
+@media (max-width: 760px){
+  .cta-band{ flex-direction:column; align-items:flex-start; padding: 40px 28px; }
+}
+
+/* ---------- Footer ---------- */
+
+footer{
+  border-top: 1px solid var(--hairline);
+  padding: 72px 0 36px;
+}
+.footer-top{
+  display:grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 40px;
+  padding-bottom: 56px;
+}
+.footer-top h4{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 18px;
+  font-weight: 500;
+}
+.footer-top ul{ display:flex; flex-direction:column; gap: 11px; }
+.footer-top a{ color: var(--text-2); font-size: 14px; }
+.footer-top a:hover{ color: var(--gold-soft); }
+.footer-brand p{ color: var(--text-2); font-size: 14px; max-width: 300px; margin-top: 16px; }
+
+.footer-bottom{
+  display:flex; justify-content:space-between; align-items:center;
+  padding-top: 28px;
+  border-top: 1px solid var(--hairline);
+  font-size: 13px;
+  color: var(--text-3);
+}
+.footer-bottom .legal-links{ display:flex; gap: 24px; }
+
+@media (max-width: 880px){
+  .footer-top{ grid-template-columns: 1fr 1fr; }
+  .footer-bottom{ flex-direction:column; gap:16px; align-items:flex-start; }
+}
+
+/* ---------- Page hero (secondary pages) ---------- */
+
+.page-hero{
+  padding: 88px 0 64px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* ---------- Process / numbered steps ---------- */
+
+.step-row{
+  display:grid;
+  grid-template-columns: 90px 1fr;
+  gap: 28px;
+  padding: 36px 0;
+  border-top: 1px solid var(--hairline);
+}
+.step-row:last-child{ border-bottom: 1px solid var(--hairline); }
+.step-index{
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 30px;
+  color: var(--gold-soft);
+}
+.step-row h3{ font-size: 19px; margin-bottom: 8px; }
+.step-row p{ color: var(--text-2); font-size: 14.5px; max-width: 560px; }
+
+/* ---------- Forms ---------- */
+
+.form-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.form-grid .full{ grid-column: 1 / -1; }
+label{
+  display:block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 8px;
+}
+input, textarea, select{
+  width: 100%;
+  background: var(--surface-2);
+  border: 1px solid var(--hairline-2);
+  color: var(--text-1);
+  padding: 13px 15px;
+  border-radius: var(--radius-s);
+  font-family: var(--font-body);
+  font-size: 14.5px;
+}
+input:focus, textarea:focus, select:focus{
+  outline: none;
+  border-color: var(--gold);
+}
+textarea{ resize: vertical; min-height: 120px; }
+@media (max-width: 640px){ .form-grid{ grid-template-columns: 1fr; } }
+
+.form-note{
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--text-3);
+}
+#form-success{
+  display:none;
+  padding: 18px 20px;
+  border: 1px solid var(--gold);
+  background: var(--gold-dim);
+  border-radius: var(--radius-s);
+  font-size: 14.5px;
+  color: var(--gold-soft);
+  margin-bottom: 24px;
+}
+#form-success.show{ display:block; }
+
+/* ---------- Contact detail rows ---------- */
+
+.detail-row{
+  display:flex; justify-content:space-between; align-items:flex-start;
+  padding: 22px 0;
+  border-top: 1px solid var(--hairline);
+  gap: 20px;
+}
+.detail-row:last-child{ border-bottom: 1px solid var(--hairline); }
+.detail-row .k{ font-family: var(--font-mono); font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color: var(--text-3); }
+.detail-row .v{ color: var(--text-1); font-size: 15px; text-align: right; }
+
+/* ---------- Misc utility ---------- */
+
+.flex{ display:flex; }
+.between{ justify-content: space-between; }
+.center{ align-items:center; }
+.gap-12{ gap:12px; }
+.gap-20{ gap:20px; }
+.mt-8{ margin-top:8px; }
+.mt-16{ margin-top:16px; }
+.mt-24{ margin-top:24px; }
+.mt-40{ margin-top:40px; }
+.mb-16{ margin-bottom:16px; }
+.text-2{ color: var(--text-2); }
+.tag-list{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 20px; }
+
+/* ---------- Reveal on scroll ---------- */
+
+.reveal{
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.in{ opacity:1; transform:none; }
+
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container">
+    <a href="index.html" class="brand">Clarity<span class="dot">.</span></a>
+    <button class="nav-toggle">Menu</button>
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="services.html">Services</a>
+      <a href="products.html">Products</a>
+      <a href="about.html">About</a>
+      <a href="case-study.html">Case Study</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a href="contact.html" class="btn btn-primary">Book a consultation</a>
+    </div>
+  </div>
+</nav>
+
+<section style="padding: 96px 0 0;">
+  <div class="container">
+    <div class="eyebrow">GenAI &amp; Decision Intelligence · Bangalore</div>
+    <h1 class="h-hero">Custom AI systems that make your <em>decisions</em> clearer, not just your dashboards.</h1>
+    <p class="lede mt-24">Clarity designs and builds GenAI applications and decision-intelligence systems for enterprises — from a single production copilot to a full pricing, forecasting and inventory engine that runs the business with you.</p>
+    <div class="flex gap-12 mt-40" style="flex-wrap:wrap;">
+      <a href="products.html" class="btn btn-primary">Explore Decisio <span class="btn-arrow">→</span></a>
+      <a href="contact.html" class="btn btn-ghost">Book a consultation</a>
+    </div>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="focus-rule"><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="stat-strip">
+      <div class="stat"><div class="figure">4.2%</div><div class="cap">Margin uplift</div></div>
+      <div class="stat"><div class="figure">92%</div><div class="cap">Forecast accuracy</div></div>
+      <div class="stat"><div class="figure">35%</div><div class="cap">Inventory optimised</div></div>
+      <div class="stat"><div class="figure">&lt;3hr</div><div class="cap">Time to decision</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="border-top">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">What we do</div>
+      <h2 class="h-1">AI, built around how your business actually decides</h2>
+    </div>
+    <div class="grid grid-4">
+      <div class="card reveal">
+        <span class="num">GENAI APPS</span>
+        <h3>Custom GenAI Applications</h3>
+        <p>LLM-powered copilots and internal tools built around your workflows and data — not a generic chat widget.</p>
+      </div>
+      <div class="card reveal">
+        <span class="num">DECISION AI</span>
+        <h3>Decision Intelligence Systems</h3>
+        <p>Autonomous, explainable systems for pricing, demand and inventory — the discipline behind our own product, Decisio.</p>
+      </div>
+      <div class="card reveal">
+        <span class="num">AGENTS</span>
+        <h3>AI Agent Engineering</h3>
+        <p>Goal-oriented agents with memory, tool use and human-in-the-loop approvals, wired safely into what you already run.</p>
+      </div>
+      <div class="card reveal">
+        <span class="num">DATA LAYER</span>
+        <h3>Systems Integration</h3>
+        <p>Connecting your ERP, CRM and warehouse into one layer your AI systems can reason over reliably.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tight border-top">
+  <div class="container">
+    <div class="section-head split">
+      <div>
+        <div class="eyebrow">Working with</div>
+        <h2 class="h-2">Teams who've moved past AI pilots</h2>
+      </div>
+      <a href="case-study.html" class="btn btn-ghost">Read the case study <span class="btn-arrow">→</span></a>
+    </div>
+    <div class="client-strip">
+      <div class="client-wordmark"><b>sukta</b>ERP</div>
+    </div>
+  </div>
+</section>
+
+<section class="border-top">
+  <div class="container grid grid-2" style="align-items:center; gap:64px;">
+    <div class="reveal">
+      <div class="eyebrow">Our product</div>
+      <h2 class="h-1">Decisio — decision intelligence, not dashboards</h2>
+      <p class="body-md mt-16">Decisio is Clarity's own platform: a system of specialised AI agents that continuously price, forecast demand, plan inventory and flag risk — with every decision explained and every action gated by the guardrails you set. It's the same engineering discipline we bring to every custom build.</p>
+      <div class="tag-list">
+        <span class="chip">Pricing intelligence</span>
+        <span class="chip">Demand forecasting</span>
+        <span class="chip">Inventory optimisation</span>
+        <span class="chip">Explainable AI</span>
+      </div>
+      <div class="flex gap-12 mt-40">
+        <a href="products.html" class="btn btn-primary">See the platform <span class="btn-arrow">→</span></a>
+      </div>
+    </div>
+    <div class="card reveal" style="padding:36px;">
+      <div class="label-mono mb-16">Decision feed · illustrative</div>
+      <div style="display:flex; flex-direction:column;">
+        <div class="detail-row"><span class="v" style="text-align:left;">Increase SKU price 4.5% ahead of demand spike</span><span class="k" style="color:var(--sage); flex-shrink:0; margin-left:14px;">Approved</span></div>
+        <div class="detail-row"><span class="v" style="text-align:left;">Reorder inventory at 2.1× normal quantity</span><span class="k" style="color:var(--gold-soft); flex-shrink:0; margin-left:14px;">Pending</span></div>
+        <div class="detail-row"><span class="v" style="text-align:left;">Hold price — festival demand window active</span><span class="k" style="color:var(--sage); flex-shrink:0; margin-left:14px;">Approved</span></div>
+        <div class="detail-row"><span class="v" style="text-align:left;">Flag supplier lead-time risk on category C</span><span class="k" style="color:var(--ice-soft); flex-shrink:0; margin-left:14px;">Alert</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tight border-top">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">How we work</div>
+      <h2 class="h-1">From first conversation to production system</h2>
+    </div>
+    <div>
+      <div class="step-row"><div class="step-index">01</div><div><h3>Discover</h3><p>We map your decisions, data sources and the constraints that actually matter — margin, compliance, trust.</p></div></div>
+      <div class="step-row"><div class="step-index">02</div><div><h3>Design</h3><p>A working prototype grounded in your real data, reviewed with the people who will use it daily.</p></div></div>
+      <div class="step-row"><div class="step-index">03</div><div><h3>Deploy</h3><p>Integrated into your existing stack, with guardrails, approval flows and monitoring from day one.</p></div></div>
+      <div class="step-row"><div class="step-index">04</div><div><h3>Drive value</h3><p>We stay on to tune, retrain and extend the system as your business changes.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="border-top">
+  <div class="container">
+    <div class="cta-band">
+      <div>
+        <h2 class="h-2">Ready to bring clarity to your next decision?</h2>
+        <p class="text-2 mt-8">Tell us what you're trying to solve — we'll tell you honestly whether AI is the right tool for it.</p>
+      </div>
+      <div class="actions">
+        <a href="contact.html" class="btn btn-primary">Book a consultation <span class="btn-arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="brand">Clarity<span class="dot">.</span></a>
+        <p>An AI product and engineering studio building custom GenAI applications and decision-intelligence systems for enterprises. Based in Bangalore, India.</p>
+      </div>
+      <div>
+        <h4>Studio</h4>
+        <ul>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="case-study.html">Case study</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="products.html">Decisio platform</a></li>
+          <li><a href="products.html#pricing">Pricing intelligence</a></li>
+          <li><a href="products.html#forecasting">Demand forecasting</a></li>
+          <li><a href="products.html#inventory">Inventory optimisation</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <ul>
+          <li><a href="mailto:hello@clarity.ai">hello@clarity.ai</a></li>
+          <li><a href="contact.html">Bangalore, India</a></li>
+          <li><a href="contact.html">Book a consultation</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Clarity. All rights reserved.</span>
+      <div class="legal-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Clarity — shared behaviour
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Mobile nav toggle
+  const toggle = document.querySelector(".nav-toggle");
+  const links = document.querySelector(".nav-links");
+  if (toggle && links) {
+    toggle.addEventListener("click", () => {
+      const open = links.classList.toggle("open");
+      toggle.textContent = open ? "Close" : "Menu";
+    });
+    links.querySelectorAll("a").forEach((a) =>
+      a.addEventListener("click", () => {
+        links.classList.remove("open");
+        toggle.textContent = "Menu";
+      })
+    );
+  }
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window && revealEls.length) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    revealEls.forEach((el) => io.observe(el));
+  } else {
+    revealEls.forEach((el) => el.classList.add("in"));
+  }
+
+  // Contact form (static — no backend)
+  const form = document.getElementById("contact-form");
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const success = document.getElementById("form-success");
+      if (success) {
+        success.classList.add("show");
+        success.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      form.reset();
+    });
+  }
+});
+
+</script>
+</body>
+</html>
