@@ -625,6 +625,9 @@ textarea{ resize: vertical; min-height: 120px; }
     <div class="reveal">
       <div id="form-success">Thanks — your message has been sent. We'll get back to you within one business day.</div>
       <form id="contact-form">
+        <input type="hidden" name="access_key" value="8487a37f-a0d4-4b0f-8c76-dba4f754aa1d">
+        <input type="hidden" name="subject" value="New enquiry from Clarity website">
+        <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off">
         <div class="form-grid">
           <div>
             <label for="name">Name</label>
@@ -764,17 +767,64 @@ document.addEventListener("DOMContentLoaded", () => {
     revealEls.forEach((el) => el.classList.add("in"));
   }
 
-  // Contact form (static — no backend)
+  // Contact form — submits straight to Web3Forms (email relay, no backend needed)
   const form = document.getElementById("contact-form");
   if (form) {
-    form.addEventListener("submit", (e) => {
+    const success = document.getElementById("form-success");
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    let errorBox = document.getElementById("form-error");
+    if (!errorBox) {
+      errorBox = document.createElement("div");
+      errorBox.id = "form-error";
+      errorBox.style.display = "none";
+      errorBox.style.marginBottom = "16px";
+      errorBox.style.padding = "14px 16px";
+      errorBox.style.border = "1px solid #b5544a";
+      errorBox.style.borderRadius = "var(--radius-s)";
+      errorBox.style.color = "#f0a99f";
+      errorBox.style.fontSize = "13.5px";
+      errorBox.textContent = "Something went wrong sending your message. Please email us directly at dharam.k.m@gmail.com.";
+      form.parentNode.insertBefore(errorBox, form);
+    }
+
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const success = document.getElementById("form-success");
-      if (success) {
-        success.classList.add("show");
-        success.scrollIntoView({ behavior: "smooth", block: "center" });
+      errorBox.style.display = "none";
+
+      const originalLabel = submitBtn ? submitBtn.innerHTML : "";
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = "Sending…";
       }
-      form.reset();
+
+      try {
+        const formData = new FormData(form);
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: formData,
+        });
+        const result = await res.json();
+
+        if (result.success) {
+          if (success) {
+            success.classList.add("show");
+            success.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+          form.reset();
+        } else {
+          throw new Error(result.message || "Submission failed");
+        }
+      } catch (err) {
+        errorBox.style.display = "block";
+        errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalLabel;
+        }
+      }
     });
   }
 });
